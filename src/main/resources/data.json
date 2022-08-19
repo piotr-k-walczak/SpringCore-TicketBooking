@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 123,
+      "name": "Janusz Kowalski",
+      "email": "jk@email.com"
+    },
+    {
+      "id": 213,
+      "name": "Barbara Kowalska",
+      "email": "bk@email.com"
+    }
+  ],
+  "events": [
+    {
+      "id": 21,
+      "title": "Benefit papieski",
+      "date": "2022-04-23T18:25:43.511Z"
+    }
+  ],
+  "tickets": []
+}

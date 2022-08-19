@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="application.properties"/>
+
+    <bean id="storage" class="piotrwalczak.springcore.storage.StorageImpl"/>
+
+    <bean id="userDaoBean" class="piotrwalczak.springcore.dao.UserDao" autowire="byName"/>
+    <bean id="ticketDaoBean" class="piotrwalczak.springcore.dao.TicketDao" autowire="byName"/>
+    <bean id="eventDaoBean" class="piotrwalczak.springcore.dao.EventDao" autowire="byName"/>
+
+    <bean id="userServiceBean" class="piotrwalczak.springcore.services.UserServiceImpl" p:userDao-ref="userDaoBean"/>
+    <bean id="ticketServiceBean" class="piotrwalczak.springcore.services.TicketServiceImpl"
+          p:ticketDao-ref="ticketDaoBean"/>
+    <bean id="eventServiceBean" class="piotrwalczak.springcore.services.EventServiceImpl"
+          p:eventDao-ref="eventDaoBean"/>
+
+    <bean id="bookingFacade" class="piotrwalczak.springcore.facade.BookingFacadeImpl">
+        <constructor-arg type="piotrwalczak.springcore.services.UserService" ref="userServiceBean"/>
+        <constructor-arg type="piotrwalczak.springcore.services.TicketService" ref="ticketServiceBean"/>
+        <constructor-arg type="piotrwalczak.springcore.services.EventService" ref="eventServiceBean"/>
+    </bean>
+
+    <bean id="storagePostProcessor" class="piotrwalczak.springcore.storage.StorageBeanPostProcessor"
+          p:storageFilePath="${storage.filepath}"/>
+</beans>
